@@ -11,9 +11,12 @@ public class BubbleBreathing : MonoBehaviour
     public float inhaleScale = 1.35f; // Increased bubble scale so it approaches the outer ring
     public float exhaleScale = 1.0f;
     public float ringScale = 1.01f; // Made much smaller so it scales significantly less than the bubble
-    
+
     // An easing curve makes the breathing feel significantly more natural
-    public AnimationCurve breathingCurve = AnimationCurve.InOut(0, 0, 1, 1);
+    public AnimationCurve breathingCurve = AnimationCurve.EaseInOut(0, 0, 1, 1);
+    
+    // A separate curve to decouple the ring's growth rate from the bubble
+    public AnimationCurve ringCurve = AnimationCurve.Linear(0, 0, 1, 1);
 
     public float inhaleTime = 4f;
     public float holdAfterInhaleTime = 4f; // Separated holds for flexibility
@@ -54,7 +57,7 @@ public class BubbleBreathing : MonoBehaviour
 
             yield return AnimateSizes(
                 originalBubbleSize * inhaleScale,
-                originalRingSize * ringScale,
+                originalRingSize * ringScale, // Restored the ring target scale
                 inhaleTime
             );
 
@@ -89,10 +92,13 @@ public class BubbleBreathing : MonoBehaviour
             time += Time.deltaTime;
             
             // Evaluates the ease-in/ease-out curve based on percentage of completion (0.0 to 1.0)
-            float t = breathingCurve.Evaluate(time / duration);
+            float bubbleT = breathingCurve.Evaluate(time / duration);
+            
+            // Decoupled evaluation using a linear curve (or any curve you set in inspector) for the ring
+            float ringT = ringCurve.Evaluate(time / duration);
 
-            bubbleRect.sizeDelta = Vector2.LerpUnclamped(bubbleStart, bubbleTarget, t);
-            outerRing.sizeDelta = Vector2.LerpUnclamped(ringStart, ringTarget, t);
+            bubbleRect.sizeDelta = Vector2.LerpUnclamped(bubbleStart, bubbleTarget, bubbleT);
+            outerRing.sizeDelta = Vector2.LerpUnclamped(ringStart, ringTarget, ringT);
 
             yield return null;
         }
