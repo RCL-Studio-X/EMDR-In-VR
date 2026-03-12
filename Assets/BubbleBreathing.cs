@@ -27,6 +27,14 @@ public class BubbleBreathing : MonoBehaviour
     public AudioSource audioSource;
     public AudioClip breatheInClip;
     public AudioClip breatheOutClip;
+    public AudioClip shortInClip;
+    public AudioClip shortOutClip;
+
+    [Header("Cycle Settings")]
+    [Tooltip("How many full breaths of 'breathe in/out' before switching to 'in/out'.")]
+    public int longCycles = 2;
+    [Tooltip("How many breaths of the short 'in/out' before reverting back.")]
+    public int shortCycles = 1;
 
     Vector2 originalBubbleSize;
     Vector2 originalRingSize;
@@ -36,6 +44,8 @@ public class BubbleBreathing : MonoBehaviour
     WaitForSeconds holdAfterInhaleWait;
     WaitForSeconds holdAfterExhaleWait;
     Coroutine breathingCoroutine;
+
+    int currentCycle = 0;
 
     void Start()
     {
@@ -56,10 +66,17 @@ public class BubbleBreathing : MonoBehaviour
     {
         while (true)
         {
+            int totalCycleLength = longCycles + shortCycles;
+            int cycleIndex = currentCycle % totalCycleLength;
+            bool useShortAudio = cycleIndex >= longCycles;
+
             // INHALE
-            breathingText.text = "Breathe In";
-            if (audioSource != null && breatheInClip != null) 
-                audioSource.PlayOneShot(breatheInClip);
+            breathingText.text = useShortAudio ? "In" : "Breathe In";
+            if (audioSource != null)
+            {
+                AudioClip clipToPlay = useShortAudio ? shortInClip : breatheInClip;
+                if (clipToPlay != null) audioSource.PlayOneShot(clipToPlay);
+            }
             
             StartCoroutine(AnimateText(1.1f, inhaleTime));
 
@@ -74,9 +91,12 @@ public class BubbleBreathing : MonoBehaviour
             yield return holdAfterInhaleWait;
 
             // EXHALE
-            breathingText.text = "Breathe Out";
-            if (audioSource != null && breatheOutClip != null) 
-                audioSource.PlayOneShot(breatheOutClip);
+            breathingText.text = useShortAudio ? "Out" : "Breathe Out";
+            if (audioSource != null)
+            {
+                AudioClip clipToPlay = useShortAudio ? shortOutClip : breatheOutClip;
+                if (clipToPlay != null) audioSource.PlayOneShot(clipToPlay);
+            }
             
             StartCoroutine(AnimateText(0.9f, exhaleTime));
 
@@ -89,6 +109,8 @@ public class BubbleBreathing : MonoBehaviour
             // HOLD
             breathingText.text = "Hold";
             yield return holdAfterExhaleWait;
+
+            currentCycle++;
         }
     }
 
