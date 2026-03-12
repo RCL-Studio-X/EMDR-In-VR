@@ -23,6 +23,11 @@ public class BubbleBreathing : MonoBehaviour
     public float exhaleTime = 4f;
     public float holdAfterExhaleTime = 4f; 
 
+    [Header("Audio (Optional)")]
+    public AudioSource audioSource;
+    public AudioClip breatheInClip;
+    public AudioClip breatheOutClip;
+
     Vector2 originalBubbleSize;
     Vector2 originalRingSize;
     Vector3 originalTextScale;
@@ -53,6 +58,9 @@ public class BubbleBreathing : MonoBehaviour
         {
             // INHALE
             breathingText.text = "Breathe In";
+            if (audioSource != null && breatheInClip != null) 
+                audioSource.PlayOneShot(breatheInClip);
+            
             StartCoroutine(AnimateText(1.1f, inhaleTime));
 
             yield return AnimateSizes(
@@ -67,6 +75,9 @@ public class BubbleBreathing : MonoBehaviour
 
             // EXHALE
             breathingText.text = "Breathe Out";
+            if (audioSource != null && breatheOutClip != null) 
+                audioSource.PlayOneShot(breatheOutClip);
+            
             StartCoroutine(AnimateText(0.9f, exhaleTime));
 
             yield return AnimateSizes(
