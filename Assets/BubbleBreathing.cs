@@ -13,7 +13,7 @@ public class BubbleBreathing : MonoBehaviour
     public float ringScale = 1.01f; // Made much smaller so it scales significantly less than the bubble
     
     // An easing curve makes the breathing feel significantly more natural
-    public AnimationCurve breathingCurve = AnimationCurve.InOut(0, 0, 1, 1);
+    public AnimationCurve breathingCurve = AnimationCurve.EaseInOut(0, 0, 1, 1);
 
     public float inhaleTime = 4f;
     public float holdAfterInhaleTime = 4f; // Separated holds for flexibility
