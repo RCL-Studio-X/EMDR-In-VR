@@ -35,20 +35,20 @@ def generate_breathing_audio(prompt, text, output_filename):
 
 if __name__ == "__main__":
     # The prompt explicitly guides the model's inflection, pacing, and tone.
-    system_prompt = "You are a calming meditation guide. Speak softly, peacefully, and deliberately. Draw the words out just slightly longer than conversational speed—it should take about 3 seconds to say."
+    system_prompt = "You are a calming meditation guide. Speak softly, peacefully, and deliberately. Draw the word out smoothly so it takes about 1.5 to 2 seconds to say."
     
     os.makedirs("Assets/Sounds", exist_ok=True)
     
-    # generate_breathing_audio(
-    #     system_prompt, 
-    #     "Breathe in.", 
-    #     "Assets/Sounds/breathe_in.mp3"
-    # )
+    generate_breathing_audio(
+        system_prompt, 
+        "In.", 
+        "Assets/Sounds/in.mp3"
+    )
     
     generate_breathing_audio(
         system_prompt, 
-        "Breathe out.", 
-        "Assets/Sounds/breathe_out.mp3"
+        "Out.", 
+        "Assets/Sounds/out.mp3"
     )
     
     print("\nDone! Now play the scene in Unity to hear the new audio.")
