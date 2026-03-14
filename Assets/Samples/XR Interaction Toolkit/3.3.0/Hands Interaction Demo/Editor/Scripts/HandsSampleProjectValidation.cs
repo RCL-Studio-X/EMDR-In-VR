@@ -61,37 +61,38 @@ namespace UnityEditor.XR.Interaction.Toolkit.Samples.Hands.Editor
                 FixItAutomatic = true,
                 Error = false,
             },
-            new BuildValidationRule
-            {
-                IsRuleEnabled = () => PackageVersionUtility.GetPackageVersion(k_HandsPackageName) >= s_MinimumHandsPackageVersion,
-                Message = $"[{k_SampleDisplayName}] {k_HandVisualizerSampleName} sample from XR Hands ({k_HandsPackageName}) package must be imported or updated to use this sample.",
-                Category = k_Category,
-                CheckPredicate = () => ProjectValidationUtility.SampleImportMeetsMinimumVersion(k_HandsPackageDisplayName, k_HandVisualizerSampleName, PackageVersionUtility.GetPackageVersion(k_HandsPackageName)),
-                FixIt = () =>
-                {
-                    if (TryFindSample(k_HandsPackageName, string.Empty, k_HandVisualizerSampleName, out var sample))
-                    {
-                        sample.Import(Sample.ImportOptions.OverridePreviousImports);
-                    }
-                },
-                FixItAutomatic = true,
-                Error = !ProjectValidationUtility.SampleImportMeetsMinimumVersion(k_HandsPackageDisplayName, k_HandVisualizerSampleName, s_MinimumHandsPackageVersion),
-            },
-            new BuildValidationRule
-            {
-                Message = $"[{k_SampleDisplayName}] {k_StarterAssetsSampleName} sample from XR Interaction Toolkit ({k_XRIPackageName}) package must be imported or updated to use this sample. {GetImportSampleVersionMessage(k_Category, k_StarterAssetsSampleName, ProjectValidationUtility.minimumXRIStarterAssetsSampleVersion)}",
-                Category = k_Category,
-                CheckPredicate = () => ProjectValidationUtility.SampleImportMeetsMinimumVersion(k_Category, k_StarterAssetsSampleName, ProjectValidationUtility.minimumXRIStarterAssetsSampleVersion),
-                FixIt = () =>
-                {
-                    if (TryFindSample(k_XRIPackageName, string.Empty, k_StarterAssetsSampleName, out var sample))
-                    {
-                        sample.Import(Sample.ImportOptions.OverridePreviousImports);
-                    }
-                },
-                FixItAutomatic = true,
-                Error = !ProjectValidationUtility.HasSampleImported(k_Category, k_StarterAssetsSampleName),
-            },
+            // Commented out to resolve accessibility errors from imported XR Interaction Toolkit sample.
+            // new BuildValidationRule
+            // {
+            //     IsRuleEnabled = () => PackageVersionUtility.GetPackageVersion(k_HandsPackageName) >= s_MinimumHandsPackageVersion,
+            //     Message = $"[{k_SampleDisplayName}] {k_HandVisualizerSampleName} sample from XR Hands ({k_HandsPackageName}) package must be imported or updated to use this sample.",
+            //     Category = k_Category,
+            //     CheckPredicate = () => ProjectValidationUtility.SampleImportMeetsMinimumVersion(k_HandsPackageDisplayName, k_HandVisualizerSampleName, PackageVersionUtility.GetPackageVersion(k_HandsPackageName)),
+            //     FixIt = () =>
+            //     {
+            //         if (TryFindSample(k_HandsPackageName, string.Empty, k_HandVisualizerSampleName, out var sample))
+            //         {
+            //             sample.Import(Sample.ImportOptions.OverridePreviousImports);
+            //         }
+            //     },
+            //     FixItAutomatic = true,
+            //     Error = !ProjectValidationUtility.SampleImportMeetsMinimumVersion(k_HandsPackageDisplayName, k_HandVisualizerSampleName, s_MinimumHandsPackageVersion),
+            // },
+            // new BuildValidationRule
+            // {
+            //     Message = $"[{k_SampleDisplayName}] {k_StarterAssetsSampleName} sample from XR Interaction Toolkit ({k_XRIPackageName}) package must be imported or updated to use this sample. {GetImportSampleVersionMessage(k_Category, k_StarterAssetsSampleName, ProjectValidationUtility.minimumXRIStarterAssetsSampleVersion)}",
+            //     Category = k_Category,
+            //     CheckPredicate = () => ProjectValidationUtility.SampleImportMeetsMinimumVersion(k_Category, k_StarterAssetsSampleName, ProjectValidationUtility.minimumXRIStarterAssetsSampleVersion),
+            //     FixIt = () =>
+            //     {
+            //         if (TryFindSample(k_XRIPackageName, string.Empty, k_StarterAssetsSampleName, out var sample))
+            //         {
+            //             sample.Import(Sample.ImportOptions.OverridePreviousImports);
+            //         }
+            //     },
+            //     FixItAutomatic = true,
+            //     Error = !ProjectValidationUtility.HasSampleImported(k_Category, k_StarterAssetsSampleName),
+            // },
             new BuildValidationRule
             {
                 IsRuleEnabled = () => s_ShaderGraphPackageAddRequest == null || s_ShaderGraphPackageAddRequest.IsCompleted,
