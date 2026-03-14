@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 using TMPro;
 using System.Collections;
 
@@ -168,8 +169,7 @@ public class UIManager : MonoBehaviour
 
     public void OnTransitionComplete()
     {
-        Debug.Log("Moving to calming exercise experience.");
-        // Logic to load the next scene or experience
+        SceneManager.LoadScene("Calm Scene");
     }
 
     #endregion
