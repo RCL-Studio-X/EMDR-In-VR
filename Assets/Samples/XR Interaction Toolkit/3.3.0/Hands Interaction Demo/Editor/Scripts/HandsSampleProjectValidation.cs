@@ -228,10 +228,11 @@ namespace UnityEditor.XR.Interaction.Toolkit.Samples.Hands.Editor
 
         static string GetImportSampleVersionMessage(string packageFolderName, string sampleDisplayName, PackageVersion version)
         {
-            if (ProjectValidationUtility.SampleImportMeetsMinimumVersion(packageFolderName, sampleDisplayName, version) || !ProjectValidationUtility.HasSampleImported(packageFolderName, sampleDisplayName))
-                return string.Empty;
+            // if (ProjectValidationUtility.SampleImportMeetsMinimumVersion(packageFolderName, sampleDisplayName, version) || !ProjectValidationUtility.HasSampleImported(packageFolderName, sampleDisplayName))
+            //     return string.Empty;
 
-            return $"An older version of {sampleDisplayName} has been found. This may cause errors.";
+            // return $"An older version of {sampleDisplayName} has been found. This may cause errors.";
+            return string.Empty;
         }
     }
 }
