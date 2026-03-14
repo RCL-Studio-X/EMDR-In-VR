@@ -1864,13 +1864,20 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  inhaleTime: 2
-  holdAfterInhaleTime: 1
-  exhaleTime: 2
-  holdAfterExhaleTime: 1
+  inhaleTime: 3
+  holdAfterInhaleTime: 2
+  exhaleTime: 3
+  holdAfterExhaleTime: 2
   audioSource: {fileID: 1938323604}
   breatheInClip: {fileID: 8300000, guid: 1ba6dfc88e35cca4f9856ef2767d66f4, type: 3}
   breatheOutClip: {fileID: 8300000, guid: 8e5f803eaa9b9d2439476e8148fa0465, type: 3}
+  shortInClip: {fileID: 8300000, guid: 8a0de7952059bf9419a172772a46bc3a, type: 3}
+  shortOutClip: {fileID: 8300000, guid: 2d7febcee513dc44fb479e54f7bfb1d5, type: 3}
+  thirdInClip: {fileID: 8300000, guid: 04b8ffd6adfa42e4a9c8f40577d73e32, type: 3}
+  thirdOutClip: {fileID: 8300000, guid: 5218a7938b3fc3041a2fd14120425486, type: 3}
+  longCycles: 3
+  shortCycles: 2
+  thirdCycles: 2
 --- !u!114 &1938323602
 MonoBehaviour:
   m_ObjectHideFlags: 0
