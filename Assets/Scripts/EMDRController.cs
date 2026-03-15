@@ -43,7 +43,7 @@ public class EMDRController : MonoBehaviour
         if (butterfly_C3) butterfly_C3.SetActive(false);
         if (butterfly_C4) butterfly_C4.SetActive(false);
 
-        int condition = UIManager.EMDRCondition;
+        int condition = 2; //UIManager.EMDRCondition;
 
         switch (condition)
         {
@@ -85,10 +85,16 @@ public class EMDRController : MonoBehaviour
             float sweepTime = Random.Range(minSweepTime, maxSweepTime);
             float elapsed = 0f;
 
+            // Flip to face direction of travel
+            float targetYRot = goingRight ? 0f : 180f;
+            activeButterfly.transform.rotation = Quaternion.Euler(0f, targetYRot, 0f);
+
             while (elapsed < sweepTime)
             {
                 elapsed += Time.deltaTime;
-                activeButterfly.transform.position = Vector3.Lerp(from, to, elapsed / sweepTime);
+                // SmoothStep gives ease-in / ease-out instead of linear
+                float t = Mathf.SmoothStep(0f, 1f, elapsed / sweepTime);
+                activeButterfly.transform.position = Vector3.Lerp(from, to, t);
                 yield return null;
             }
 
