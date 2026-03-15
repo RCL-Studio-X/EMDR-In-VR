@@ -90,9 +90,23 @@ public class UIManager : MonoBehaviour
     #endregion
 
     #region Condition Selection Methods
+    // Static so it persists across scene loads into the Calm Scene
+    public static int EMDRCondition = 1;
+
     public void SelectCondition(string condition)
     {
         selectedCondition = condition;
+
+        // Map A/B/C/D → 1/2/3/4 for the EMDR butterfly controller
+        EMDRCondition = condition switch
+        {
+            "A" => 1, // Control — bubble breathing only
+            "B" => 2, // Bilateral Stimulation — smooth L-R tracking
+            "C" => 3, // Pro-Saccadic — flash left/right
+            "D" => 4, // Distraction — random movement
+            _ => 1
+        };
+
         SetUIState(UIState.Instructions);
     }
     #endregion
