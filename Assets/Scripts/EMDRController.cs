@@ -85,24 +85,11 @@ public class EMDRController : MonoBehaviour
             float sweepTime = Random.Range(minSweepTime, maxSweepTime);
             float elapsed = 0f;
 
-            // Smoothly rotate to face direction of travel over a short window
-            float targetYRot = goingRight ? 0f : 180f;
-            Quaternion targetRot = Quaternion.Euler(0f, targetYRot, 0f);
-            float rotDuration = 0.3f;
-
             while (elapsed < sweepTime)
             {
                 elapsed += Time.deltaTime;
                 float t = Mathf.SmoothStep(0f, 1f, elapsed / sweepTime);
                 activeButterfly.transform.position = Vector3.Lerp(from, to, t);
-
-                // Slerp rotation only for the first rotDuration seconds
-                if (elapsed < rotDuration)
-                    activeButterfly.transform.rotation = Quaternion.Slerp(
-                        activeButterfly.transform.rotation, targetRot, elapsed / rotDuration);
-                else
-                    activeButterfly.transform.rotation = targetRot;
-
                 yield return null;
             }
 
