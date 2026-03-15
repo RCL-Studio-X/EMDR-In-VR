@@ -8,16 +8,20 @@ using UnityEngine;
 /// </summary>
 public class LockAnimatorPosition : MonoBehaviour
 {
+    [Tooltip("Lock the local X position.")]
+    public bool lockX = false;
     [Tooltip("Lock the local Y position.")]
     public bool lockY = true;
     [Tooltip("Lock the local Z position.")]
     public bool lockZ = false;
 
+    private float lockedLocalX;
     private float lockedLocalY;
     private float lockedLocalZ;
 
     void Start()
     {
+        lockedLocalX = transform.localPosition.x;
         lockedLocalY = transform.localPosition.y;
         lockedLocalZ = transform.localPosition.z;
     }
@@ -26,6 +30,7 @@ public class LockAnimatorPosition : MonoBehaviour
     void LateUpdate()
     {
         Vector3 localPos = transform.localPosition;
+        if (lockX) localPos.x = lockedLocalX;
         if (lockY) localPos.y = lockedLocalY;
         if (lockZ) localPos.z = lockedLocalZ;
         transform.localPosition = localPos;
