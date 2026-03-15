@@ -28,3 +28,5 @@ Thumbs.db
 # Misc
 crashlytics-build.properties
 .gradle/venv/
+Assets/WOC/
+Assets/WOC.meta
