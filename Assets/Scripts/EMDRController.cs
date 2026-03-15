@@ -28,7 +28,7 @@ public class EMDRController : MonoBehaviour
 
     [Header("Condition 4 – Distraction")]
     public float wanderRangeX = 2.5f;
-    public float wanderRangeY = 1.0f;
+    public float wanderRangeY = 0.2f;
     public float minWanderInterval = 2.0f;
     public float maxWanderInterval = 4.0f;
     public float wanderSpeed = 0.6f;
