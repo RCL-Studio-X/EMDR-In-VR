@@ -1,32 +1,33 @@
 using UnityEngine;
 
 /// <summary>
-/// Locks the Y (and optionally Z) world position of the butterfly after
-/// the Animator has run each frame, preventing the built-in
-/// animation from drifting it above or below its spawn height.
+/// Locks the LOCAL Y (and optionally Z) of this GameObject after the Animator runs.
+/// Add this to SM_Single_Big (the child mesh), NOT the root butterfly prefab.
+/// This prevents the built-in fly animation from drifting the body up/down
+/// while still allowing the EMDRController to move the root in world space.
 /// </summary>
 public class LockAnimatorPosition : MonoBehaviour
 {
-    [Tooltip("Lock the Y position to the spawn point.")]
+    [Tooltip("Lock the local Y position.")]
     public bool lockY = true;
-    [Tooltip("Lock the Z position to the spawn point.")]
+    [Tooltip("Lock the local Z position.")]
     public bool lockZ = false;
 
-    private float lockedY;
-    private float lockedZ;
+    private float lockedLocalY;
+    private float lockedLocalZ;
 
     void Start()
     {
-        lockedY = transform.position.y;
-        lockedZ = transform.position.z;
+        lockedLocalY = transform.localPosition.y;
+        lockedLocalZ = transform.localPosition.z;
     }
 
-    // LateUpdate runs AFTER the Animator, so this overrides animation offsets
+    // LateUpdate runs AFTER the Animator, overriding its local position offsets
     void LateUpdate()
     {
-        Vector3 pos = transform.position;
-        if (lockY) pos.y = lockedY;
-        if (lockZ) pos.z = lockedZ;
-        transform.position = pos;
+        Vector3 localPos = transform.localPosition;
+        if (lockY) localPos.y = lockedLocalY;
+        if (lockZ) localPos.z = lockedLocalZ;
+        transform.localPosition = localPos;
     }
 }
