@@ -43,7 +43,7 @@ public class EMDRController : MonoBehaviour
         if (butterfly_C3) butterfly_C3.SetActive(false);
         if (butterfly_C4) butterfly_C4.SetActive(false);
 
-        int condition = 2; //UIManager.EMDRCondition;
+        int condition = UIManager.EMDRCondition;
 
         switch (condition)
         {
