@@ -28,7 +28,7 @@ public class EMDRController : MonoBehaviour
 
     [Header("Condition 4 – Distraction")]
     public float wanderRangeX = 2.5f;
-    public float wanderRangeY = 0.2f;
+    public float wanderRangeY = 1.0f;
     public float minWanderInterval = 2.0f;
     public float maxWanderInterval = 4.0f;
     public float wanderSpeed = 0.6f;
@@ -43,7 +43,7 @@ public class EMDRController : MonoBehaviour
         if (butterfly_C3) butterfly_C3.SetActive(false);
         if (butterfly_C4) butterfly_C4.SetActive(false);
 
-        int condition = UIManager.EMDRCondition;
+        int condition = 2; // UIManager.EMDRCondition;
 
         switch (condition)
         {
@@ -77,22 +77,25 @@ public class EMDRController : MonoBehaviour
     {
         if (activeButterfly == null) yield break;
         bool goingRight = true;
+        float fixedY = activeButterfly.transform.position.y;
+        float fixedZ = activeButterfly.transform.position.z;
 
         while (true)
         {
-            Vector3 from = goingRight ? leftAnchor.position : rightAnchor.position;
-            Vector3 to   = goingRight ? rightAnchor.position : leftAnchor.position;
+            float fromX = goingRight ? leftAnchor.position.x : rightAnchor.position.x;
+            float toX   = goingRight ? rightAnchor.position.x : leftAnchor.position.x;
             float sweepTime = Random.Range(minSweepTime, maxSweepTime);
             float elapsed = 0f;
 
             while (elapsed < sweepTime)
             {
                 elapsed += Time.deltaTime;
-                activeButterfly.transform.position = Vector3.Lerp(from, to, elapsed / sweepTime);
+                float x = Mathf.Lerp(fromX, toX, elapsed / sweepTime);
+                activeButterfly.transform.position = new Vector3(x, fixedY, fixedZ);
                 yield return null;
             }
 
-            activeButterfly.transform.position = to;
+            activeButterfly.transform.position = new Vector3(toX, fixedY, fixedZ);
             goingRight = !goingRight;
         }
     }
@@ -103,10 +106,13 @@ public class EMDRController : MonoBehaviour
     {
         if (activeButterfly == null) yield break;
         bool showLeft = true;
+        float fixedY = leftAnchor.position.y;
+        float fixedZ = leftAnchor.position.z;
 
         while (true)
         {
-            activeButterfly.transform.position = showLeft ? leftAnchor.position : rightAnchor.position;
+            float x = showLeft ? leftAnchor.position.x : rightAnchor.position.x;
+            activeButterfly.transform.position = new Vector3(x, fixedY, fixedZ);
             activeButterfly.SetActive(true);
 
             yield return new WaitForSeconds(flashDuration);
